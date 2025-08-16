@@ -1,12 +1,8 @@
-// src/Pages/Article.js
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import people from "../components/people/data"; // ✅ import people
+import { Link, useLocation } from "react-router-dom";
+import people from "../components/people/data";
 import "./style.css";
 
-const reactions = ["👍 Like", "❤️ Love", "😡 Angry", "😢 Sad"];
-
-// ✅ Generate dummy comments directly from people data
 const dummyComments = people.map((person, index) => ({
   id: index + 1,
   author: person.name,
@@ -16,16 +12,21 @@ const dummyComments = people.map((person, index) => ({
     month: "long",
     year: "numeric",
   }),
-  text: person.bio, // use their bio as the comment text
+  text: person.bio,
+  liked: null, // "like" | "dislike" | null
   likes: 0,
   dislikes: 0,
 }));
 
 export default function ArticlePage() {
-  const [selectedReaction, setSelectedReaction] = useState(null);
-  const [commentReactions, setCommentReactions] = useState({});
-  const [currentPage, setCurrentPage] = useState(1);
+  const location = useLocation();
+  const { name, image, bio } = location.state || {
+    name: "danial hossain",
+    image: "/profile.jpg",
+    bio: "Software Developer, C++ & React enthusiast 🚀",
+  };
 
+  const [currentPage, setCurrentPage] = useState(1);
   const [newComment, setNewComment] = useState("");
   const [comments, setComments] = useState(dummyComments);
 
@@ -34,10 +35,7 @@ export default function ArticlePage() {
   const currentComments = comments.slice(startIdx, startIdx + commentsPerPage);
   const totalPages = Math.ceil(comments.length / commentsPerPage);
 
-  const handleCommentReaction = (commentId, reaction) => {
-    setCommentReactions({ ...commentReactions, [commentId]: reaction });
-  };
-
+  // ✅ Add comment
   const handleAddComment = () => {
     if (!newComment.trim()) return;
     const newEntry = {
@@ -50,6 +48,7 @@ export default function ArticlePage() {
         year: "numeric",
       }),
       text: newComment,
+      liked: null,
       likes: 0,
       dislikes: 0,
     };
@@ -58,56 +57,64 @@ export default function ArticlePage() {
     setCurrentPage(1);
   };
 
-  const handleLike = (id) => {
+  // ✅ Like/Dislike toggle logic
+  const handleLikeDislike = (id, type) => {
     setComments((prev) =>
-      prev.map((c) => (c.id === id ? { ...c, likes: c.likes + 1 } : c))
-    );
-  };
+      prev.map((c) => {
+        if (c.id !== id) return c;
 
-  const handleDislike = (id) => {
-    setComments((prev) =>
-      prev.map((c) =>
-        c.id === id ? { ...c, dislikes: c.dislikes + 1 } : c
-      )
+        // already liked/disliked
+        if (c.liked === type) return c;
+
+        if (type === "like") {
+          return {
+            ...c,
+            liked: "like",
+            likes: c.likes + 1,
+            dislikes: c.liked === "dislike" ? c.dislikes - 1 : c.dislikes,
+          };
+        } else {
+          return {
+            ...c,
+            liked: "dislike",
+            dislikes: c.dislikes + 1,
+            likes: c.liked === "like" ? c.likes - 1 : c.likes,
+          };
+        }
+      })
     );
   };
 
   return (
     <div className="article-container">
-      {/* Breadcrumb */}
       <p className="breadcrumb">Section &gt; Sub-section</p>
 
-      {/* Title */}
       <h1 className="article-title">
         Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor
       </h1>
 
-      {/* Intro */}
       <p className="article-intro">
         Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor
       </p>
 
-      {/* Image */}
       <div className="article-image"></div>
 
-      {/* Caption */}
       <p className="article-caption">
         Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor
       </p>
 
-      {/* Author */}
+      {/* ✅ Author info */}
       <div className="author-box">
-        <div className="author-avatar"></div>
+        <div className="author-avatar">
+          <img src={image} alt={name} style={{ width: 50, borderRadius: "50%" }} />
+        </div>
         <div>
           <Link
             to="/author"
-            state={{
-              name: "John Doe",
-              image: "https://via.placeholder.com/100",
-            }}
+            state={{ name, image, bio }}
             className="author-name"
           >
-            Author Name
+            {name}
           </Link>
           <p className="author-date">7 January 2025</p>
         </div>
@@ -115,31 +122,16 @@ export default function ArticlePage() {
 
       <div className="decorative-line"></div>
 
-      {/* Content */}
       <p className="article-body">
         Lorem ipsum dolor Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor
       </p>
 
       <div className="decorative-line"></div>
 
-      {/* Reactions */}
-      <div className="reactions-box">
-        {reactions.map((r, i) => (
-          <button
-            key={i}
-            onClick={() => setSelectedReaction(r)}
-            className={`reaction-btn ${selectedReaction === r ? "active" : ""}`}
-          >
-            {r}
-          </button>
-        ))}
-      </div>
-
-      {/* Comments */}
+      {/* ✅ Comments */}
       <div className="comments-box">
         <h3>{comments.length} Comments</h3>
 
-        {/* Input */}
         <div className="comment-input">
           <input
             type="text"
@@ -151,7 +143,6 @@ export default function ArticlePage() {
           <button onClick={handleAddComment}>➤</button>
         </div>
 
-        {/* Comment list */}
         {currentComments.map((c) => (
           <div key={c.id} className="comment">
             {c.profile ? (
@@ -164,23 +155,20 @@ export default function ArticlePage() {
             <p className="comment-date">{c.date}</p>
             <p className="comment-text">{c.text}</p>
 
+            {/* ✅ Only Like & Dislike */}
             <div className="comment-actions">
-              <span onClick={() => handleLike(c.id)}>👍 {c.likes}</span>
-              <span onClick={() => handleDislike(c.id)}>👎 {c.dislikes}</span>
-            </div>
-
-            <div className="comment-reactions">
-              {reactions.map((r) => (
-                <button
-                  key={r}
-                  onClick={() => handleCommentReaction(c.id, r)}
-                  className={`reaction-btn ${
-                    commentReactions[c.id] === r ? "active" : ""
-                  }`}
-                >
-                  {r}
-                </button>
-              ))}
+              <button
+                onClick={() => handleLikeDislike(c.id, "like")}
+                className={c.liked === "like" ? "active" : ""}
+              >
+                👍 {c.likes}
+              </button>
+              <button
+                onClick={() => handleLikeDislike(c.id, "dislike")}
+                className={c.liked === "dislike" ? "active" : ""}
+              >
+                👎 {c.dislikes}
+              </button>
             </div>
           </div>
         ))}

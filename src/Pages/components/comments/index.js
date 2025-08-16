@@ -1,3 +1,4 @@
+// src/Pages/CommentsBox.js
 import { useState } from "react";
 import "./style.css";
 
@@ -7,8 +8,6 @@ const dummyComments = Array.from({ length: 6 }, (_, i) => ({
   author: "Author Name",
   date: "10 February 2025",
   text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-  likes: 0,
-  dislikes: 0,
 }));
 
 export default function CommentsBox() {
@@ -22,20 +21,6 @@ export default function CommentsBox() {
   const currentComments = comments.slice(startIdx, startIdx + commentsPerPage);
   const totalPages = Math.ceil(comments.length / commentsPerPage);
 
-  // Like handler
-  const handleLike = (id) => {
-    setComments((prev) =>
-      prev.map((c) => (c.id === id ? { ...c, likes: c.likes + 1 } : c))
-    );
-  };
-
-  // Dislike handler
-  const handleDislike = (id) => {
-    setComments((prev) =>
-      prev.map((c) => (c.id === id ? { ...c, dislikes: c.dislikes + 1 } : c))
-    );
-  };
-
   // Add new comment
   const handleAddComment = () => {
     if (!newComment.trim()) return;
@@ -48,12 +33,10 @@ export default function CommentsBox() {
         year: "numeric",
       }),
       text: newComment,
-      likes: 0,
-      dislikes: 0,
     };
-    setComments([newEntry, ...comments]); // Add new comment on top
+    setComments([newEntry, ...comments]); // Add on top
     setNewComment("");
-    setCurrentPage(1); // go back to first page
+    setCurrentPage(1); // back to page 1
   };
 
   return (
@@ -84,8 +67,6 @@ export default function CommentsBox() {
               </div>
               <p className="text">{c.text}</p>
               <div className="comment-actions">
-                <span onClick={() => handleLike(c.id)}>👍 Like {c.likes}</span>
-                <span onClick={() => handleDislike(c.id)}>👎 Dislike {c.dislikes}</span>
                 <span className="reply">Reply</span>
               </div>
             </div>
