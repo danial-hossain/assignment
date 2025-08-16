@@ -1,0 +1,21 @@
+.person-profile {
+  text-align: center;
+  padding: 20px;
+}
+
+.person-img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin-bottom: 15px;
+}
+
+.person-name {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.person-bio {
+  font-size: 16px;
+  color: #555;
+}

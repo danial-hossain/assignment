@@ -1,23 +1,25 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import ArticlePage from "./Pages/Article";
-import AuthorPage from "./Pages/Author";
-import "./App.css";
+// src/App.js
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import ArticlePage from "./Pages/Article"; // Article page
+import people from "./Pages/components/people/data"; // People data
+import PersonProfile from "./Pages/components/people"; // Profile component
 
-function App() {
+export default function App() {
   return (
     <Router>
-      <div className="App">
-        <Routes>
-          {/* Default route redirects to /article */}
-          <Route path="/" element={<Navigate to="/article" />} />
+      <Routes>
+        {/* Main Article Page */}
+        <Route path="/" element={<ArticlePage />} />
 
-          {/* Pages */}
-          <Route path="/article" element={<ArticlePage />} />
-          <Route path="/author" element={<AuthorPage />} />
-        </Routes>
-      </div>
+        {/* Person Profile Pages (auto-generated from data.js) */}
+        {people.map((person) => (
+          <Route
+            key={person.id}
+            path={`/people/${person.id}`}
+            element={<PersonProfile person={person} />}
+          />
+        ))}
+      </Routes>
     </Router>
   );
 }
-
-export default App;
