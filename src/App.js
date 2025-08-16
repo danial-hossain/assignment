@@ -1,22 +1,27 @@
 // src/App.js
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import ArticlePage from "./Pages/Article"; // Article page
-import people from "./Pages/components/people/data"; // People data
-import PersonProfile from "./Pages/components/people"; // Profile component
+import ArticlePage from "./Pages/Article";
+import Profile from "./Pages/Author";
+import people from "./Pages/components/people/data";
+
+import PersonProfile from "./Pages/components/people";
 
 export default function App() {
   return (
     <Router>
       <Routes>
-        {/* Main Article Page */}
+        {/* Article */}
         <Route path="/" element={<ArticlePage />} />
 
-        {/* Person Profile Pages (auto-generated from data.js) */}
-        {people.map((person) => (
+        {/* Author Profile */}
+        <Route path="/author" element={<Profile />} />
+
+        {/* People Profiles (dynamic) */}
+        {people.map((p) => (
           <Route
-            key={person.id}
-            path={`/people/${person.id}`}
-            element={<PersonProfile person={person} />}
+            key={p.id}
+            path={`/people/${p.id}`}
+            element={<PersonProfile person={p} />}
           />
         ))}
       </Routes>
