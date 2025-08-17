@@ -6,6 +6,8 @@ import { Link, useLocation } from "react-router-dom";
 //hash → the URL hash (like #section2)
 //state → any extra data another page passed when navigating
 
+//Link → lets you navigate to another route and optionally pass extra data.
+//useLocation → lets the target page read the current route info and that passed data.
 
 import "./profile.css";
 
