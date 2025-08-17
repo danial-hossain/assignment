@@ -1,4 +1,6 @@
 // src/Pages/components/people/data.js
+//people is an array of objects.
+//Each object represents one person
 const people = [
     {
       id: 1,

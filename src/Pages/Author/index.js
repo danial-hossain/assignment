@@ -10,9 +10,16 @@ import { Link, useLocation } from "react-router-dom";
 //useLocation → lets the target page read the current route info and that passed data.
 import "./profile.css";
 
+
+
+//what extra state (if any) was passed when navigating with <Link ... state={...} />.
+
+
 export default function Profile() {
   const location = useLocation();
+  //useLocation() → always tells you where you are in the app (which route) and 
   const { name, image, bio } = location.state || {
+    //location.state → may contain { name, image, bio } if another page passed it via Link.
     name: "danial hossain",
     image: "/profile.jpg", // ✅ your profile.jpg in public folder
     bio: "Software Developer, C++ & React enthusiast 🚀",
@@ -24,16 +31,7 @@ export default function Profile() {
       title: "Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor",
       link: "/article/1", // ✅ correct route
     },
-    {
-      id: 2,
-      title: "Another Demo Article for Showcase",
-      link: "/article/2",
-    },
-    {
-      id: 3,
-      title: "How to Build a React App Step by Step",
-      link: "/article/3",
-    },
+ 
   ];
 
   return (

@@ -1,4 +1,19 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+//Router is the container for all your routes
+//react-router-dom → lets you define routes (Route) and wrap them with a router (Router)
+//What is react-router-dom?
+//It’s a library that helps you add routing to a React app.
+//Routing means: when the URL changes, the app shows a different component — without reloading the page.
+//Instead of refreshing, React swaps out components.
+
+/* In the internet world, a router (like the device in your home) decides where data should go.
+In React, it’s very similar:
+The Router decides which page/component to show depending on the URL.
+Example:
+If URL is /about → show the About Page.
+If URL is /contact → show the Contact Page.*/
+
+
 import ArticlePage from "./Pages/Article";
 import Profile from "./Pages/Author";
 import people from "./Pages/components/people/data";

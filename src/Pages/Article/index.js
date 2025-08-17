@@ -172,19 +172,21 @@ export default function ArticlePage() {
       </h1>
 
       <p className="article-intro">
-        Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor
+        Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor
+        Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor 
       </p>
 
       <div className="article-image"></div>
 
       <p className="article-caption">
-        Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor
+        Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum 
+      
       </p>
 
       {/* ✅ Author info */}
       <div className="author-box">
         <div className="author-avatar">
-          <img src={image} alt={name} style={{ width: 50, borderRadius: "50%" }} />
+          <img src={image} alt={name} style={{ width: 50, borderRadius: "0%" }} />
           { /*from 37th line we used the default image as there is no data passed  */}
 
           { /*<Link> → React Router component (works like <a> but no page refresh).
@@ -211,12 +213,21 @@ export default function ArticlePage() {
       <div className="decorative-line"></div>
 
       <p className="article-body">
-        Lorem ipsum dolor Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor
+        Lorem ipsum dolor Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor  
+         Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor
+        Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor
+        Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor 
+        Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor
+        Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor 
+        Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor
+        
       </p>
 
       <div className="decorative-line"></div>
 
-      {/* ✅ Reaction buttons + Box */}
+      {/* ✅ Reaction buttons + Box 
+      onClick={() => handleReaction("like")}
+       When the button is clicked, it calls the function handleReaction("like"). */}
       <div className="reaction-buttons">
         <button
           onClick={() => handleReaction("like")}
@@ -243,7 +254,7 @@ export default function ArticlePage() {
           😢 Sad
         </button>
       </div>
-
+      { /* reaction box that shows all reactions dynamically.,muloto je box ta dekhay reaction result % */ }
       <div className="reaction-box">
         {Object.entries(reactions).map(([key, value]) => (
           <div
