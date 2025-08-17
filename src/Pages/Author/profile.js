@@ -1,4 +1,12 @@
 import { Link, useLocation } from "react-router-dom";
+// /Uses React Router to both read data passed from another page (useLocation) and navigate (Link).
+//useLocation->It tells you which route (URL path) you are currently on.
+//It gives you:pathname → the current route (/profile, /article/3, etc.)
+//search → the query string (like ?id=5&sort=asc)
+//hash → the URL hash (like #section2)
+//state → any extra data another page passed when navigating
+
+
 import "./profile.css";
 
 export default function Profile() {
